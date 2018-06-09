@@ -22,6 +22,7 @@ const UserSchema = new Schema({
 UserSchema.pre('save', function (next) {
   if (this.isModified('password')) {
     this.password = this._hashPassword(this.password)
+    console.log(this.password)
     return next()
   }
   return next()
