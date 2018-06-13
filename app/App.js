@@ -1,16 +1,34 @@
-import React from 'react'
-import {ThemeProvider} from 'styled-components'
+import React, { Component } from "react"
+import { Root } from "native-base"
+import { Font, AppLoading } from "expo"
 import AppNavigator from './src/navigation/AppNavigator'
 
-import {colors} from './src/utils/constants'
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { loading: true }
+  }
 
-export default class App extends React.Component {
+  async componentWillMount() {
+    await Font.loadAsync({
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
+    })
+    this.setState({ loading: false })
+  }
+
   render() {
+    if (this.state.loading) {
+      return (
+        <Root>
+          <AppLoading />
+        </Root>
+      )
+    }
     return (
-      <ThemeProvider theme={colors}>
+      <Root>
         <AppNavigator />
-      </ThemeProvider>
-    );
+      </Root>
+    )
   }
 }
-

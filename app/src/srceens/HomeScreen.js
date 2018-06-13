@@ -1,22 +1,26 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import MainNavigator from '../navigation/LoggedTabNavigator'
 
-const Wrapper = styled.View`
-  flex: 1;
-`
-
-const Title = styled.Text`
-  font-size: 16px;
-  color: ${props => props.theme.PRIMARY};
-`
-
+import HeaderButton from '../components/Buttons/HeaderButton'
 
 class HomeScreen extends Component {
+  static navigationOptions = () => ({
+    headerTitle: 'Instagram',
+    headerTitleStyle: {
+      flex: 1,
+      textAlign: 'center'
+    },
+    headerLeft: (
+      <HeaderButton name="ios-camera-outline" headerStyle={{marginLeft: 10}} />
+    ),
+    headerRight: (
+      <HeaderButton name="ios-send-outline" headerStyle={{marginRight: 10}} />
+    ),
+  })
+
   render() {
     return (
-      <Wrapper>
-        <Title>hello home</Title>
-      </Wrapper>
+      <MainNavigator />
     )
   }
 }
