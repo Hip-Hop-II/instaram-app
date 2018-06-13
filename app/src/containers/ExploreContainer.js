@@ -10,7 +10,7 @@ import {
   Content,
   Thumbnail
 } from 'native-base'
-import { colors } from '../utils/constants';
+import { colors } from '../utils/constants'
 
 class ExploreContainer extends Component {
   static navigationOptions = {
