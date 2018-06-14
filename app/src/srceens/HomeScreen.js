@@ -16,6 +16,7 @@ class HomeScreen extends Component {
     headerRight: (
       <HeaderButton name="ios-send-outline" headerStyle={{marginRight: 10}} />
     ),
+    header: null
   })
 
   render() {

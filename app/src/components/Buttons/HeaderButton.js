@@ -9,17 +9,22 @@ import {colors} from '../../utils/constants'
 
 function HeaderButton ({name, size, color, onPress, headerStyle}) {
   return (
-    <TouchableOpacity onPress={onPress} style={headerStyle}>
       <Icon 
       name={name}
       color={color || colors.SECONDARY}
       />
-    </TouchableOpacity>
+    
   )
 }
 
 HeaderButton.propTypes = {
 
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    alignItems: 'flex-end'
+  }
+})
 
 export default HeaderButton

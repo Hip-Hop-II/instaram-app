@@ -1,7 +1,9 @@
 import React, { Component } from "react"
 import { Root } from "native-base"
 import { Font, AppLoading } from "expo"
-import AppNavigator from './src/navigation/AppNavigator'
+import {Provider} from 'redux'
+import store from './src/redux/store'
+import AppWithNavigationState from './src/navigation/AppNavigator'
 
 export default class App extends Component {
   constructor(props) {
@@ -26,9 +28,11 @@ export default class App extends Component {
       )
     }
     return (
-      <Root>
-        <AppNavigator />
-      </Root>
+      <Provider store={store}>
+        <Root>
+          <AppWithNavigationState />
+        </Root>
+      </Provider>
     )
   }
 }

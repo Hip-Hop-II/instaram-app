@@ -3,9 +3,10 @@ import {
   StyleSheet,
   Text,
 } from 'react-native'
-import {Container, Content, Icon} from 'native-base'
+import {Container, Content, Icon, Header, Left, Body, Right, Title, Button} from 'native-base'
 import CardContentItem from '../components/CardItem'
-import { colors } from '../utils/constants';
+import { colors } from '../utils/constants'
+import HeaderButton from '../components/Buttons/HeaderButton'
 
 class HomeContainer extends Component {
   static navigationOptions = {
@@ -16,6 +17,21 @@ class HomeContainer extends Component {
   render() {
     return (
       <Container style={styles.container}>
+        <Header>
+          <Left>
+            <Button transparent>
+              <Icon name="ios-camera-outline" style={{color: colors.SECONDARY}} />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Instagram</Title>
+          </Body>
+          <Right>
+            <Button transparent>
+              <Icon name="ios-send-outline" style={{fontSize: 30, color: colors.SECONDARY}} />
+            </Button>
+          </Right>
+        </Header>
         <Content>
           <CardContentItem />
           <CardContentItem />
@@ -28,7 +44,6 @@ class HomeContainer extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: colors.WHITE
   }
 })

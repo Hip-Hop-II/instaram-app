@@ -15,37 +15,40 @@ import { avatarImg, colors } from '../../utils/constants';
 class UserInfo extends Component {
   render() {
     return (
-      <View style={styles.wrapper}>
-        <View style={styles.avatarContent}>
-          <Thumbnail source={{uri: avatarImg}} />
-        </View>
-        <View style={styles.userContent}>
-          <View style={styles.userCaption}>
-            <View style={styles.captionItem}>
-              <Text style={styles.captionItemResult}>0</Text>
-              <Text style={styles.captionItemText}>帖子</Text>
+      <View style={styles.container}>
+        <View style={styles.wrapper}>
+          <View style={styles.avatarContent}>
+            <Thumbnail source={{uri: avatarImg}} />
+          </View>
+          <View style={styles.userContent}>
+            <View style={styles.userCaption}>
+              <View style={styles.captionItem}>
+                <Text style={styles.captionItemResult}>0</Text>
+                <Text style={styles.captionItemText}>帖子</Text>
+              </View>
+              <View style={styles.captionItem}>
+                <Text style={styles.captionItemResult}>0</Text>
+                <Text style={styles.captionItemText}>粉丝</Text>
+              </View>
+              <View style={styles.captionItem}>
+                <Text style={styles.captionItemResult}>0</Text>
+                <Text style={styles.captionItemText}>关注</Text>
+              </View>
             </View>
-            <View style={styles.captionItem}>
-              <Text style={styles.captionItemResult}>0</Text>
-              <Text style={styles.captionItemText}>粉丝</Text>
-            </View>
-            <View style={styles.captionItem}>
-              <Text style={styles.captionItemResult}>0</Text>
-              <Text style={styles.captionItemText}>关注</Text>
+            <View style={styles.userAction}>
+              <Button bordered  style={styles.editButton}>
+                <Text style={styles.editButtonText}>编辑主页</Text>
+              </Button>
+              <Button bordered style={styles.settingButton}>
+                <Icon
+                name="ios-settings"
+                style={{color: colors.SECONDARY}}
+                />
+              </Button>
             </View>
           </View>
-          <View style={styles.userAction}>
-            <Button bordered  style={styles.editButton}>
-              <Text style={styles.editButtonText}>编辑主页</Text>
-            </Button>
-            <Button bordered style={styles.settingButton}>
-              <Icon
-               name="ios-settings"
-               style={{color: colors.SECONDARY}}
-               />
-            </Button>
-          </View>
         </View>
+        <Text style={styles.username}>Antony xia</Text>
       </View>
     )
   }
@@ -76,10 +79,12 @@ const styles = StyleSheet.create({
   },
   captionItemResult: {
     fontWeight: '600',
-    color: colors.SECONDARY
+    color: colors.SECONDARY,
+    fontSize: 14
   },
   captionItemText: {
-    color: colors.SECONDARY
+    color: colors.SECONDARY,
+    fontSize: 14
   },
   userAction: {
     justifyContent: 'space-around',
@@ -104,6 +109,12 @@ const styles = StyleSheet.create({
   },
   editButtonText: {
     color: colors.SECONDARY
+  },
+  username: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginLeft: 10,
+    marginTop: 10
   }
 })
 export default UserInfo
