@@ -2,7 +2,7 @@ import {NavigationActions} from 'react-navigation'
 import {AppNavigator} from '../../navigation/AppNavigator'
 import {StatusBar} from 'react-native'
 
-const firstAction = AppNavigator.router.getActionForPathAndParams('Home')
+const firstAction = AppNavigator.router.getActionForPathAndParams('Main')
 const initNavState = AppNavigator.router.getStateForAction(firstAction)
 
 export const nav = (state = initNavState, action) => {

@@ -1,9 +1,10 @@
 import React, { Component } from "react"
 import { Root } from "native-base"
 import { Font, AppLoading } from "expo"
-import {Provider} from 'redux'
+import {Provider} from 'react-redux'
 import store from './src/redux/store'
 import AppWithNavigationState from './src/navigation/AppNavigator'
+console.disableYellowBox = true
 
 export default class App extends Component {
   constructor(props) {
