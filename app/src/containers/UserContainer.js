@@ -10,8 +10,15 @@ import {
 import {
   Container,
   Icon,
-  Content
+  Content,
+  Header,
+  Left,
+  Right,
+  Body,
+  Title,
+  Button
 } from 'native-base'
+import EntypoIcon from 'react-native-vector-icons/Entypo'
 import { colors, dimensions } from '../utils/constants'
 
 import UserInfo from '../components/Users/UserInfo'
@@ -46,9 +53,29 @@ class UserContainer extends Component {
     })
 
   }
+  _renderHeader = () => {
+    return (
+      <Header>
+        <Left>
+          <Button transparent>
+            <Icon name="md-person-add" style={{ color: colors.SECONDARY }} />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Instagram</Title>
+        </Body>
+        <Right>
+          <TouchableOpacity onPress={this._newTweet}>
+            <EntypoIcon name="back-in-time" size={30} color={colors.SECONDARY} />
+          </TouchableOpacity>
+        </Right>
+      </Header>
+    )
+  }
   render() {
     return (
       <Container style={styles.container}>
+        {this._renderHeader()}
         <ScrollView style={styles.scrollView}>
           <View style={styles.wrapper}>
             <UserInfo />

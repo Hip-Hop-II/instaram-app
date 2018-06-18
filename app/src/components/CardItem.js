@@ -18,22 +18,24 @@ import {avatarImg, cardItemImg, colors} from '../utils/constants'
 
 class CardContentItem extends Component {
   render() {
+    const {photo, text, favoriteCount} = this.props
+    const {username, avatar, createdAt} = this.props.user
     return (
       <Card transparent>
         <CardItem>
           <Left>
             <Thumbnail 
-              source={{uri: avatarImg}}
+              source={{uri: avatar}}
             />
             <Body>
-              <Text>Antony xia</Text>
-              <Text note>Jan 15, 2018</Text>
+              <Text>{username}</Text>
+              <Text note>{createdAt}</Text>
             </Body>
           </Left>
         </CardItem>
         <CardItem cardBody>
           <Image 
-            source={{uri: cardItemImg}}
+            source={{uri: photo}}
             style={styles.cardBodyImage}
           />
         </CardItem>
@@ -60,12 +62,12 @@ class CardContentItem extends Component {
           </Left>
         </CardItem>
         <CardItem style={styles.likeCardItem}>
-          <Text style={styles.likeCardItemText}>102 likes</Text>
+          <Text style={styles.likeCardItemText}>{favoriteCount} likes</Text>
         </CardItem>
 
         <CardItem>
           <Body>
-            <Text>Build The UI of the Feed Page of Instagram App Using React Native, React Navigation, StackNavigator, TabNavigator, Expo.io and Native Base </Text>
+            <Text>{text}</Text>
           </Body>
         </CardItem>
       </Card>

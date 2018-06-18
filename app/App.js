@@ -21,6 +21,9 @@ export default class App extends Component {
   }
 
   render() {
+    console.log('====================store')
+    console.log(store.getState())
+    console.log('======================store')
     if (this.state.loading) {
       return (
         <Root>

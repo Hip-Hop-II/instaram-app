@@ -4,13 +4,28 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {initializeListeners} from 'react-navigation-redux-helpers'
 
-import HomeScreen from '../srceens/HomeScreen'
+import HomeScreen from './LoggedTabNavigator'
+import LoginScreen from '../srceens/LoginScreen'
+import SignupScreen from '../srceens/SignupScreen'
+import NewTweetScreen from '../srceens/NewTweetScreen'
+
 import {navigationPropConstructor} from '../redux/store'
 
-
 export const AppNavigator = createStackNavigator({
+  Login: {
+    screen: LoginScreen
+  },
+  Signup: {
+    screen: SignupScreen
+  },
   Main: {
-    screen: HomeScreen
+    screen: HomeScreen,
+    navigationOptions: () => ({
+      header: null
+    })
+  },
+  NewTweet: {
+    screen: NewTweetScreen
   }
 }, {
   mode: 'modal'
@@ -26,9 +41,6 @@ class AppWithNavigationState extends Component {
   }
   render () {
     const {dispatch, nav} = this.props
-    console.log('=========')
-    console.log('=========', navigationPropConstructor)
-    console.log('=========')
     const navigation= navigationPropConstructor(
       dispatch,
       nav
@@ -38,5 +50,9 @@ class AppWithNavigationState extends Component {
     )
   }
 }
+const mapStateToProps = state => ({
+  nav: state.nav,
+  user: state.user
+})
 
-export default connect(state => ({nav: state.nav}))(AppWithNavigationState)
+export default connect(mapStateToProps)(AppWithNavigationState)

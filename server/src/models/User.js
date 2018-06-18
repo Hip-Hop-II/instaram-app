@@ -17,6 +17,8 @@ const UserSchema = new Schema({
   email: {
     type: String
   }
+}, {
+  timestamps: true
 })
 
 UserSchema.pre('save', function (next) {
@@ -45,4 +47,4 @@ UserSchema.methods = {
   }
 }
 
-export default mongoose.model('user', UserSchema)
+export default mongoose.model('User', UserSchema)
