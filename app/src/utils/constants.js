@@ -16,7 +16,6 @@ export const colors = {
 export const avatarImg = 'https://randomuser.me/api/portraits/women/4.jpg'
 export const cardItemImg = 'https://raw.githubusercontent.com/nathvarun/React-Native-Layout-Tutorial-Series/master/assets/feed_images/1.jpg'
 export const dimensions = Dimensions.get('window')
-export const logoImg = 'https://img.xiaopiu.com/static/instagram-ui-kit-kerroudj/102.png'
 
 export const config = {
   API_PATH: 'http://172.16.12.105:9999'

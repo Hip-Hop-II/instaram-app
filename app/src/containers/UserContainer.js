@@ -18,10 +18,15 @@ import {
   Title,
   Button
 } from 'native-base'
+import {connect} from 'react-redux'
+import {getUserTweets} from '../redux/actions/tweet'
+
 import EntypoIcon from 'react-native-vector-icons/Entypo'
 import { colors, dimensions } from '../utils/constants'
 
 import UserInfo from '../components/Users/UserInfo'
+import ThumbnailItem from '../components/Users/ThumbnailItem'
+import CardItem from '../components//CardItem'
 import Tabs from '../components/Users/Tabs'
 
 import { tabs, media } from '../data/user'
@@ -39,19 +44,39 @@ class UserContainer extends Component {
     this.setState({ tabActiveIndex: index })
   }
   _renderSection = () => {
-    return media.map((item, index) => {
+    const data = this.props.userTweets.data || []
+    const {tabActiveIndex} = this.state
+    if (tabActiveIndex === 0) {
+     const list = data.map((item, index) => {
+        return (
+          <ThumbnailItem style={index % 3 !== 0 ? { paddingLeft: 2 } : { paddingLeft: 0 }} key={index} {...item} />
+        )
+      })
       return (
-        <TouchableOpacity 
-          style={[styles.imageWrapper, index % 3 !== 0 ? { paddingLeft: 2 } : { paddingLeft: 0 }]} 
-          key={index}>
-          <Image
-            source={{ uri: item.photo }}
-            style={styles.photo}
-          />
-        </TouchableOpacity>
+        <View style={styles.tabContent}>
+          {list}
+        </View>
       )
+    } else if (tabActiveIndex === 1) {
+      const list = this._formatUser(data, this.props.userTweets.user).map((item, index) => {
+        return (
+          <CardItem key={index} {...item} />
+        )
+      })
+      return (
+        <View style={{flex: 1}}>
+          {list}
+        </View>
+      )
+    }
+  }
+  _formatUser (tweets, user) {
+    return tweets.map(item => {
+      return {
+        ...item,
+        user
+      }
     })
-
   }
   _renderHeader = () => {
     return (
@@ -72,13 +97,16 @@ class UserContainer extends Component {
       </Header>
     )
   }
+  componentDidMount () {
+    this.props.getUserTweets()
+  }
   render() {
     return (
       <Container style={styles.container}>
         {this._renderHeader()}
         <ScrollView style={styles.scrollView}>
           <View style={styles.wrapper}>
-            <UserInfo />
+            <UserInfo {...this.props.userTweets.user} />
           </View>
           <View>
             <Tabs tabs={tabs} activeIndex={this.state.tabActiveIndex} tabItemOnPress={this._tabItemOnPress} />
@@ -104,19 +132,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20
   },
-  imageWrapper: {
-    width: dimensions.width / 3,
-    height: dimensions.height / 4,
-    marginBottom: 2
-  },
-  photo: {
-    width: undefined,
-    flex: 1
-  },
   tabContent: {
     flexDirection: 'row',
     flexWrap: 'wrap'
   }
 })
 
-export default UserContainer
+const mapStateToProps = ({tweet}) => ({
+  userTweets: tweet.userTweets
+})
+const mapDispatchToProps = {
+  getUserTweets
+}
+export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)

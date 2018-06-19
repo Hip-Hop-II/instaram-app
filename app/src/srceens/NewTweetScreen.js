@@ -6,7 +6,7 @@ import {
   Image,
   StyleSheet
 } from 'react-native'
-import {Container, Content, Button, Icon} from 'native-base'
+import {Container, Content, Button, Icon, Spinner} from 'native-base'
 import {colors} from '../utils/constants'
 import InputField from '../components/Form/InputField'
 import {ImagePicker, Permissions} from 'expo'
@@ -24,7 +24,8 @@ class NewTweetScreen extends Component {
   })
   state = {
     text: '',
-    result: {}
+    result: {},
+    loading: false
   }
   _openImagePicker = async () => {
     const {status} = await Permissions.getAsync(Permissions.CAMERA)
@@ -56,12 +57,14 @@ class NewTweetScreen extends Component {
   }
   _submitOnPress = async () => {
     try {
+      this.setState({loading: true})
       const {text} = this.state
       const {uri} = this.state.result
       const data = await Tweet.createTweet({
         text,
         photo: uri
       })
+      this.setState({loading: false})
       if (data.status === 200) {
         this.props.navigation.goBack()
         this.props.getTweets()
@@ -71,6 +74,13 @@ class NewTweetScreen extends Component {
     }
   }
   render() {
+    if (this.state.loading) {
+      return (
+        <Container style={styles.container}>
+          <Spinner />
+        </Container>
+      )
+    }
     const {width, height, uri} = this.state.result
     return (
       <Container style={styles.container}>

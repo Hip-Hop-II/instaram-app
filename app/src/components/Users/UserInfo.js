@@ -14,11 +14,12 @@ import { avatarImg, colors } from '../../utils/constants';
 
 class UserInfo extends Component {
   render() {
+    const {username, avatar} = this.props
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
           <View style={styles.avatarContent}>
-            <Thumbnail source={{uri: avatarImg}} />
+            <Thumbnail source={{uri: avatar}} />
           </View>
           <View style={styles.userContent}>
             <View style={styles.userCaption}>
@@ -42,13 +43,13 @@ class UserInfo extends Component {
               <Button bordered style={styles.settingButton}>
                 <Icon
                 name="ios-settings"
-                style={{color: colors.SECONDARY}}
+                style={{color: colors.SECONDARY, fontSize: 14}}
                 />
               </Button>
             </View>
           </View>
         </View>
-        <Text style={styles.username}>Antony xia</Text>
+        <Text style={styles.username}>{username}</Text>
       </View>
     )
   }
@@ -80,11 +81,11 @@ const styles = StyleSheet.create({
   captionItemResult: {
     fontWeight: '600',
     color: colors.SECONDARY,
-    fontSize: 14
+    fontSize: 12
   },
   captionItemText: {
     color: colors.SECONDARY,
-    fontSize: 14
+    fontSize: 12
   },
   userAction: {
     justifyContent: 'space-around',
@@ -108,7 +109,8 @@ const styles = StyleSheet.create({
     borderColor: colors.LIGHT_BLACK
   },
   editButtonText: {
-    color: colors.SECONDARY
+    color: colors.SECONDARY,
+    fontSize: 14
   },
   username: {
     fontSize: 16,

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
+  ImageBackground,
   TouchableOpacity
 } from 'react-native'
 import { Container, Content, Icon, Header, Left, Body, Right, Title, Button, Spinner } from 'native-base'
@@ -41,7 +42,7 @@ class HomeContainer extends Component {
           </Button>
         </Left>
         <Body>
-          <Title>Instagram</Title>
+          <ImageBackground style={styles.headerImage} source={require('../images/logo.png')} />
         </Body>
         <Right>
           <TouchableOpacity onPress={this._newTweet}>
@@ -78,6 +79,10 @@ class HomeContainer extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.WHITE
+  },
+  headerImage: {
+    width: 188/1.8,
+    height: 54/1.8
   }
 })
 const mapStateToProps = ({tweet}) => ({

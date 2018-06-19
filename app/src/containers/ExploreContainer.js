@@ -20,6 +20,9 @@ import {
 } from 'native-base'
 import { colors, dimensions } from '../utils/constants'
 import { media } from '../data/user'
+import ThumbnailItem from '../components/Users/ThumbnailItem'
+
+import {connect} from 'react-redux'
 
 const MAX_HEIGHT = 80
 const MIN_HEIGHT = 0
@@ -46,16 +49,9 @@ class ExploreContainer extends Component {
     scrollY: new Animated.Value(0)
   }
   _renderSection = () => {
-    return media.map((item, index) => {
+    return this.props.tweets.map((item, index) => {
       return (
-        <TouchableOpacity 
-          style={[styles.imageWrapper, index % 3 !== 0 ? { paddingLeft: 2 } : { paddingLeft: 0 }]} 
-          key={index}>
-          <Image
-            source={{ uri: item.photo }}
-            style={styles.photo}
-          />
-        </TouchableOpacity>
+        <ThumbnailItem key={index} {...item} currentIndex={index} />
       )
     })
 
@@ -127,4 +123,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ExploreContainer
+export default connect(({tweet}) => ({tweets: tweet.tweets}))(ExploreContainer)

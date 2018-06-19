@@ -6,8 +6,9 @@ import {
   ScrollView,
   StyleSheet
 } from 'react-native'
-import {Button, Icon} from 'native-base'
-import {logoImg, colors} from '../utils/constants'
+import {Button, Icon, Spinner} from 'native-base'
+import {colors, avatarImg} from '../utils/constants'
+import {User} from '../api'
 
 import InputField from '../components/Form/InputField'
 
@@ -15,10 +16,54 @@ class SignupScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     header: null
   })
+  state={
+    username: '',
+    email: '',
+    password: '',
+    loading: false
+  }
   _loginOnPress = () => {
     this.props.navigation.navigate('Login')
   }
+  _signOnPress = async () => {
+    try {
+      this.setState({loading: true})
+      const {username, email, password} = this.state
+      const data = await User.signup({
+        username,
+        email,
+        password,
+        avatar: avatarImg
+      })
+      this.setState({loading: false})
+      if (data.status === 200) {
+        this.props.navigation.navigate('Login')
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+  _onChangeText = (value, type) => {
+    if (type === 'username') {
+      this.setState({username: value})
+    } else if (type === 'email') {
+      this.setState({email: value})
+    } else {
+      this.setState({password: value})
+    }
+  }
+  get _validateForm () {
+    const {username, email, password} = this.state
+    return !username || !email || !password
+  }
   render() {
+    if (this.state.loading) {
+      return (
+        <View style={[styles.container, {paddingTop: 70}]}>
+          <Spinner />
+        </View>
+      )
+    }
     return (
       <View style={styles.container}>
         <View style={styles.heading}>
@@ -30,25 +75,28 @@ class SignupScreen extends Component {
           </Button>
         </View>
         <View style={styles.logoImageWrapper}>
-          <Image source={{uri: logoImg}} style={styles.logoImage} />
+          <Image source={require('../images/logo.png')} style={styles.logoImage} />
         </View>
         <ScrollView style={styles.scrollView}>
           <View style={styles.content}>
             <InputField
               placeholder="用户名"
               placeholderTextColor={colors.LIGHT_BLACK}
+              onChangeText={(value) => this._onChangeText(value, 'username')}
             />
             <InputField
               placeholder="邮箱"
               placeholderTextColor={colors.LIGHT_BLACK}
               keyboardType="email-address"
+              onChangeText={(value) => this._onChangeText(value, 'email')}
             />
             <InputField
               placeholder="密码"
               type="password"
               placeholderTextColor={colors.LIGHT_BLACK}
+              onChangeText={(value) => this._onChangeText(value, 'password')}
             />
-            <Button style={styles.submitButton}>
+            <Button style={styles.submitButton} onPress={this._signOnPress} disabled={this._validateForm}>
               <Text style={styles.submitButtonText}>注册</Text>
             </Button>
             <Text style={styles.policyText}>注册即表示您同意我们的条款和隐私政策。</Text>

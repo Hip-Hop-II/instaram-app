@@ -10,6 +10,7 @@ async function auth(req, res, next) {
     } else {
       req.user = null
     }
+    return next()
   } catch (error) {
     throw error
   }
@@ -17,6 +18,7 @@ async function auth(req, res, next) {
 
 export default app => {
   app.use(bodyParser.json())
+  app.use(auth)
   app.all('*', function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild')

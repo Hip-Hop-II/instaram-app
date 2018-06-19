@@ -7,7 +7,7 @@ import {
   StyleSheet
 } from 'react-native'
 import {Button, Spinner} from 'native-base'
-import {logoImg, colors} from '../utils/constants'
+import {colors} from '../utils/constants'
 import {User} from '../api'
 
 import InputField from '../components/Form/InputField'
@@ -54,7 +54,7 @@ class LoginScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.logoImageWrapper}>
-          <Image source={{uri: logoImg}} style={styles.logoImage} />
+          <Image source={require('../images/logo.png')} style={styles.logoImage} />
         </View>
         <ScrollView style={styles.scrollView}>
           <View style={styles.content}>

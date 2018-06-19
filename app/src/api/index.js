@@ -51,14 +51,23 @@ export const User = {
       .then(data => data)
       .catch(error => console.error(error))
   },
-  signup () {
-
+  signup (data) {
+    return fetch(`${config.API_PATH}/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(data => data)
+      .catch(error => console.error(error))
   }
 }
 
 export const Tweet = {
   getTweets () {
-    console.log(parseParams())
     return fetch(`${config.API_PATH}/tweet/list`, parseParams())
       .then(checkStatus)
       .then(parseJSON)
@@ -70,6 +79,13 @@ export const Tweet = {
       method: 'POST',
       data
     }))
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(data => data)
+      .catch(error => console.error(error))
+  },
+  getUserTweets () {
+    return fetch(`${config.API_PATH}/usertweet/list`, parseParams())
       .then(checkStatus)
       .then(parseJSON)
       .then(data => data)

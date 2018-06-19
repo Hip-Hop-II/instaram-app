@@ -10,5 +10,6 @@ router.post('/login', users.login)
 // tweet
 router.get('/tweet/list', tweets.getTweets)
 router.post('/tweet', tweets.createTweet)
+router.get('/usertweet/list', tweets.getUserTweets)
 
 export default router

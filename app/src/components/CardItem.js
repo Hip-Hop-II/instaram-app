@@ -67,7 +67,7 @@ class CardContentItem extends Component {
 
         <CardItem>
           <Body>
-            <Text>{text}</Text>
+            <Text style={styles.discription}>{text}</Text>
           </Body>
         </CardItem>
       </Card>
@@ -92,6 +92,10 @@ const styles = StyleSheet.create({
   },
   likeCardItemText: {
     fontWeight: '600'
+  },
+  discription: {
+    color: colors.PRIMARY,
+    fontSize: 16
   }
 })
 export default CardContentItem
