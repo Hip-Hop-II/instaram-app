@@ -13,7 +13,7 @@ export const colors = {
   LIGHT_WHITE: '#f2f2f2'
 }
 
-export const avatarImg = 'https://randomuser.me/api/portraits/women/4.jpg'
+export const avatarImg = 'https://i.loli.net/2018/06/20/5b29c5f193642.jpg'
 export const cardItemImg = 'https://raw.githubusercontent.com/nathvarun/React-Native-Layout-Tutorial-Series/master/assets/feed_images/1.jpg'
 export const dimensions = Dimensions.get('window')
 

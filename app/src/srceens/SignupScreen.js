@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   ScrollView,
+  AsyncStorage,
   StyleSheet
 } from 'react-native'
 import {Button, Icon, Spinner} from 'native-base'
@@ -37,7 +38,8 @@ class SignupScreen extends Component {
       })
       this.setState({loading: false})
       if (data.status === 200) {
-        this.props.navigation.navigate('Login')
+        await AsyncStorage.setItem('@insAndapp', data.token)
+        this.props.navigation.navigate('Main')
       }
     } catch (error) {
       throw error

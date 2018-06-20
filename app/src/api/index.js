@@ -17,15 +17,15 @@ function parseJSON(response) {
   return response.json()
 }
 
-function parseParams (params={}) {
+async function parseParams (params={}) {
   try {
-    // const data = await AsyncStorage.getItem('@token')
+    const data = await AsyncStorage.getItem('@insAndapp')
     const defaultOptions = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         credentials: 'same-origin',
-        // authorization: data != null ? data : ''
+        authorization: data != null ? `Bearer ${data}` : null
       }
     }
     if (params.method) {
@@ -63,32 +63,62 @@ export const User = {
       .then(parseJSON)
       .then(data => data)
       .catch(error => console.error(error))
+  },
+  async uploadAvatar (data) {
+    try {
+      const params = await parseParams({
+        method: 'POST',
+        data
+      })
+      return fetch(`${config.API_PATH}/uploadAvatar`, params)
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(data => data)
+        .catch(error => console.error(error))
+    } catch (error) {
+      throw error
+    }
   }
 }
 
 export const Tweet = {
-  getTweets () {
-    return fetch(`${config.API_PATH}/tweet/list`, parseParams())
-      .then(checkStatus)
-      .then(parseJSON)
-      .then(data => data)
-      .catch(error => console.error(error))
+  async getTweets () {
+    try {
+      const params = await parseParams()
+      return fetch(`${config.API_PATH}/tweet/list`, params)
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(data => data)
+        .catch(error => console.error(error))
+    } catch (error) {
+      throw error
+    }
   },
-  createTweet (data) {
-    return fetch(`${config.API_PATH}/tweet`, parseParams({
-      method: 'POST',
-      data
-    }))
-      .then(checkStatus)
-      .then(parseJSON)
-      .then(data => data)
-      .catch(error => console.error(error))
+  async createTweet (data) {
+    try {
+      const params = await parseParams({
+        method: 'POST',
+        data
+      })
+      return fetch(`${config.API_PATH}/tweet`, params)
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(data => data)
+        .catch(error => console.error(error))
+    } catch (error) {
+      throw error
+    }
   },
-  getUserTweets () {
-    return fetch(`${config.API_PATH}/usertweet/list`, parseParams())
-      .then(checkStatus)
-      .then(parseJSON)
-      .then(data => data)
-      .catch(error => console.error(error))
+  async getUserTweets () {
+    try {
+      const params = await parseParams()
+      return fetch(`${config.API_PATH}/usertweet/list`, params)
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(data => data)
+        .catch(error => console.error(error))
+    } catch (error) {
+      throw error
+    }
   }
 }

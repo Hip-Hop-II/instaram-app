@@ -10,11 +10,11 @@ const app = express()
 middlewares(app)
 app.use('/', router)
 
-// mock().then(() => {
+mock().then(() => {
   app.listen(constans.PORT, (error) => {
     if (error) {
       console.error(error)
     }
     console.log(`App listen to prot: ${constans.PORT}`)
   })
-// })
+})

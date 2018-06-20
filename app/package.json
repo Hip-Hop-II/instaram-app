@@ -19,6 +19,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "dayjs": "^1.6.9",
     "expo": "^27.0.1",
     "native-base": "2.4.5",
     "prop-types": "^15.6.1",

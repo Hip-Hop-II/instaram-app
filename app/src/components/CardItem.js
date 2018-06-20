@@ -15,6 +15,7 @@ import {
   Icon
 } from 'native-base'
 import {avatarImg, cardItemImg, colors} from '../utils/constants'
+import dayjs from 'dayjs'
 
 class CardContentItem extends Component {
   render() {
@@ -29,7 +30,7 @@ class CardContentItem extends Component {
             />
             <Body>
               <Text>{username}</Text>
-              <Text note>{createdAt}</Text>
+              <Text note>{dayjs(createdAt).format('YYYY-MM-DD HH:mm')}</Text>
             </Body>
           </Left>
         </CardItem>

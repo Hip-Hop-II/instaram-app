@@ -24,7 +24,6 @@ class SendContainer extends Component {
         allowsEditing: true,
         aspect: [1, 1]
       })
-      console.log(result)
     }
   }
   render() {

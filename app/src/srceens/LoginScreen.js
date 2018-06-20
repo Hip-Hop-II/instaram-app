@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   ScrollView,
+  AsyncStorage,
   StyleSheet
 } from 'react-native'
 import {Button, Spinner} from 'native-base'
@@ -27,11 +28,11 @@ class LoginScreen extends Component {
     try {
       this.setState({loading: true})
       const data = await User.login({username, password})
-      this.setState({loading: false}, () => {
-        if (data.status === 200) {
-          this.props.navigation.navigate('Main')
-        }
-      })
+      this.setState({loading: false})
+      if (data.status === 200) {
+        await AsyncStorage.setItem('@insAndapp', data.token)
+        this.props.navigation.navigate('Main')
+      }
     } catch (error) {
       throw error
     }

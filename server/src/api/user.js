@@ -41,3 +41,19 @@ export async function login (req, res) {
     throw error
   }
 }
+
+export async function uploadAvatar (req, res) {
+  try {
+    const {avatar} = req.body
+    const {_id} = req.user
+    const user = await User.findByIdAndUpdate(_id, {avatar}, {new: true})
+    if (user) {
+      return res.json({
+        status: 200,
+        message: '更新成功'
+      })
+    }
+  } catch (error) {
+    throw error
+  }
+}

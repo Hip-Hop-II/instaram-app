@@ -6,6 +6,7 @@ async function auth(req, res, next) {
     const token = req.headers.authorization
     if (token) {
       const user = await decodeToken(token)
+      console.log(typeof user)
       req.user = user
     } else {
       req.user = null

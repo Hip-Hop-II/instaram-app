@@ -8,6 +8,7 @@ import HomeScreen from './LoggedTabNavigator'
 import LoginScreen from '../srceens/LoginScreen'
 import SignupScreen from '../srceens/SignupScreen'
 import NewTweetScreen from '../srceens/NewTweetScreen'
+import SettingScreen from '../srceens/SettingScreen'
 
 import {navigationPropConstructor} from '../redux/store'
 
@@ -26,6 +27,9 @@ export const AppNavigator = createStackNavigator({
   },
   NewTweet: {
     screen: NewTweetScreen
+  },
+  Setting: {
+    screen: SettingScreen
   }
 }, {
   mode: 'modal'

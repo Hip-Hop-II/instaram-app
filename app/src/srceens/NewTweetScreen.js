@@ -9,10 +9,11 @@ import {
 import {Container, Content, Button, Icon, Spinner} from 'native-base'
 import {colors} from '../utils/constants'
 import InputField from '../components/Form/InputField'
-import {ImagePicker, Permissions} from 'expo'
 import {Tweet} from '../api'
 import {connect} from 'react-redux'
 import {getTweets} from '../redux/actions/tweet'
+
+import ImagePicker from '../utils/ImagePicker'
 
 class NewTweetScreen extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -28,19 +29,11 @@ class NewTweetScreen extends Component {
     loading: false
   }
   _openImagePicker = async () => {
-    const {status} = await Permissions.getAsync(Permissions.CAMERA)
-    if (status !== 'granted') {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: 'Images',
-        allowsEditing: true,
-        aspect: [1, 1]
+    const result = await ImagePicker()
+    if (!result.cancelled) {
+      this.setState({
+        result
       })
-      alert(JSON.stringify(result))
-      if (!result.cancelled) {
-        this.setState({
-          result
-        })
-      }
     }
   }
   _uploadOnPress = () => {
@@ -96,7 +89,7 @@ class NewTweetScreen extends Component {
             <Text style={styles.lengthText}>
               {this._textLength}
             </Text>
-            {!this.state.result.uri ? 
+            {!uri ? 
             <Button transparent style={{padding: 0, height: 80}} onPress={this._uploadOnPress}>
               <Icon name="ios-add-circle-outline" 
               style={{fontSize: 40, color: colors.LIGHT_BLACK}}

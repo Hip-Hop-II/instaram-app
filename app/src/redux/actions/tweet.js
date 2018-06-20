@@ -19,7 +19,6 @@ export function getUserTweets () {
   return async (dispatch) => {
     try {
       const data = await Tweet.getUserTweets()
-      console.log(data)
       if (data.status === 200) {
         dispatch({
           type: 'RECEIVE_USER_TWEETS',

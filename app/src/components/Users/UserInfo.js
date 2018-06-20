@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
   View,
+  TouchableOpacity,
   StyleSheet
 } from 'react-native'
 import {
@@ -14,12 +15,14 @@ import { avatarImg, colors } from '../../utils/constants';
 
 class UserInfo extends Component {
   render() {
-    const {username, avatar} = this.props
+    const {username, avatar, uploadOnPress} = this.props
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
           <View style={styles.avatarContent}>
-            <Thumbnail source={{uri: avatar}} />
+            <TouchableOpacity onPress={uploadOnPress}>
+              <Thumbnail source={{uri: avatar}} />
+            </TouchableOpacity>
           </View>
           <View style={styles.userContent}>
             <View style={styles.userCaption}>
@@ -40,7 +43,8 @@ class UserInfo extends Component {
               <Button bordered  style={styles.editButton}>
                 <Text style={styles.editButtonText}>编辑主页</Text>
               </Button>
-              <Button bordered style={styles.settingButton}>
+              <Button bordered style={styles.settingButton} 
+                onPress={() => this.props.navigation.navigate('Setting', {username})}>
                 <Icon
                 name="ios-settings"
                 style={{color: colors.SECONDARY, fontSize: 14}}

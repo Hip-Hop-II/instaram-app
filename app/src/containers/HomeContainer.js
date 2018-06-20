@@ -3,6 +3,8 @@ import {
   StyleSheet,
   Text,
   ImageBackground,
+  ScrollView,
+  RefreshControl,
   TouchableOpacity
 } from 'react-native'
 import { Container, Content, Icon, Header, Left, Body, Right, Title, Button, Spinner } from 'native-base'
@@ -21,7 +23,8 @@ class HomeContainer extends Component {
     )
   }
   state = {
-    loading: false
+    loading: false,
+    refreshing: false
   }
   _renderCard () {
     return this.props.tweets.map((item, index) => {
@@ -32,6 +35,11 @@ class HomeContainer extends Component {
   }
   _newTweet = () => {
     this.props.navigation.navigate('NewTweet')
+  }
+  _onRefresh = async () => {
+    this.setState({refreshing: true})
+    await this.props.getTweets()
+    this.setState({refreshing: false})
   }
   _renderHeader = () => {
     return (
@@ -68,9 +76,16 @@ class HomeContainer extends Component {
     return (
       <Container style={styles.container}>
         {this._renderHeader()}
-        <Content>
+        <ScrollView style={styles.scrollView}
+          refreshControl={
+            <RefreshControl 
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh}
+            />
+          }
+        >
           {this._renderCard()}
-        </Content>
+        </ScrollView>
       </Container>
     )
   }
@@ -83,6 +98,9 @@ const styles = StyleSheet.create({
   headerImage: {
     width: 188/1.8,
     height: 54/1.8
+  },
+  scrollView: {
+    flex: 1
   }
 })
 const mapStateToProps = ({tweet}) => ({

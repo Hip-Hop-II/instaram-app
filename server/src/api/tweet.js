@@ -20,10 +20,11 @@ export async function getTweets (req, res) {
 export async function createTweet (req, res) {
   try {
     const {text, photo} = req.body
+    const {_id} = req.user
     const tweet = await Tweet.create({
       text,
       photo,
-      user: '5b28d138ca1e6e3d745d56d3'
+      user: _id
     })
     if (tweet) {
       return res.json({
@@ -39,7 +40,7 @@ export async function createTweet (req, res) {
 
 export async function getUserTweets (req, res) {
   try {
-    const user = req.user || '5b28d138ca1e6e3d745d56d3'
+    const user = req.user._id
     const userTweets = await Tweet.find({user}).sort({createdAt: -1})
     const users = await User.findById(user)
     if (userTweets) {

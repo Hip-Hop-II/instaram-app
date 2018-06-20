@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  RefreshControl,
   StyleSheet
 } from 'react-native'
 import {
@@ -20,9 +21,11 @@ import {
 } from 'native-base'
 import {connect} from 'react-redux'
 import {getUserTweets} from '../redux/actions/tweet'
+import {uploadAvatar} from '../redux/actions/user'
 
 import EntypoIcon from 'react-native-vector-icons/Entypo'
 import { colors, dimensions } from '../utils/constants'
+import ImagePicker from '../utils/ImagePicker'
 
 import UserInfo from '../components/Users/UserInfo'
 import ThumbnailItem from '../components/Users/ThumbnailItem'
@@ -38,7 +41,8 @@ class UserContainer extends Component {
     )
   }
   state = {
-    tabActiveIndex: 0
+    tabActiveIndex: 0,
+    refreshing: false
   }
   _tabItemOnPress = (index) => {
     this.setState({ tabActiveIndex: index })
@@ -78,7 +82,20 @@ class UserContainer extends Component {
       }
     })
   }
+  _uploadOnPress = async () => {
+    try {
+      const result = await ImagePicker()
+      if (!result.cancelled) {
+        this.props.uploadAvatar({
+          avatar: result.uri
+        })
+      }
+    } catch (error) {
+      throw error
+    }
+  }
   _renderHeader = () => {
+    const {user} = this.props.userTweets
     return (
       <Header>
         <Left>
@@ -87,7 +104,7 @@ class UserContainer extends Component {
           </Button>
         </Left>
         <Body>
-          <Title>Instagram</Title>
+          <Title>{user ? user.username : ''}</Title>
         </Body>
         <Right>
           <TouchableOpacity onPress={this._newTweet}>
@@ -97,6 +114,11 @@ class UserContainer extends Component {
       </Header>
     )
   }
+  _onRefresh = async () => {
+    this.setState({refreshing: true})
+    await this.props.getUserTweets()
+    this.setState({refreshing: false})
+  }
   componentDidMount () {
     this.props.getUserTweets()
   }
@@ -104,9 +126,16 @@ class UserContainer extends Component {
     return (
       <Container style={styles.container}>
         {this._renderHeader()}
-        <ScrollView style={styles.scrollView}>
+        <ScrollView style={styles.scrollView}
+          refreshControl={
+            <RefreshControl 
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh}
+            />            
+          }
+        >
           <View style={styles.wrapper}>
-            <UserInfo {...this.props.userTweets.user} />
+            <UserInfo {...this.props.userTweets.user} uploadOnPress={this._uploadOnPress} navigation={this.props.navigation} />
           </View>
           <View>
             <Tabs tabs={tabs} activeIndex={this.state.tabActiveIndex} tabItemOnPress={this._tabItemOnPress} />
@@ -142,6 +171,7 @@ const mapStateToProps = ({tweet}) => ({
   userTweets: tweet.userTweets
 })
 const mapDispatchToProps = {
-  getUserTweets
+  getUserTweets,
+  uploadAvatar
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)

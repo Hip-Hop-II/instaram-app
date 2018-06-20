@@ -28,6 +28,7 @@ export default createBottomTabNavigator({
   },
 }, {
   mode: 'model',
+  initialRouteName: 'Home',
   animationEnabled: true,
   swipeEnabled: true,
   tabBarOptions: {
