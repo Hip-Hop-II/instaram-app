@@ -4,6 +4,7 @@ import {
   Text,
   ScrollView,
   Animated,
+  RefreshControl,
   StyleSheet,
   TouchableOpacity,
   Image,
@@ -23,6 +24,7 @@ import { media } from '../data/user'
 import ThumbnailItem from '../components/Users/ThumbnailItem'
 
 import {connect} from 'react-redux'
+import {getTweets} from '../redux/actions/tweet'
 
 const MAX_HEIGHT = 80
 const MIN_HEIGHT = 0
@@ -46,7 +48,8 @@ class ExploreContainer extends Component {
     ).start()
   }
   state = {
-    scrollY: new Animated.Value(0)
+    scrollY: new Animated.Value(0),
+    refreshing: false
   }
   _renderSection = () => {
     return this.props.tweets.map((item, index) => {
@@ -54,7 +57,14 @@ class ExploreContainer extends Component {
         <ThumbnailItem key={index} {...item} currentIndex={index} />
       )
     })
-
+  }
+  _onRefresh = async () => {
+    this.setState({refreshing: true})
+    await this.props.getTweets()
+    this.setState({refreshing: false})
+  }
+  componentDidMount () {
+    this._onRefresh()
   }
   render() {
     const searchOpaticy = this.state.scrollY.interpolate({
@@ -79,6 +89,12 @@ class ExploreContainer extends Component {
         <ScrollView
           style={styles.scrollView}
           scrollEventThrottle={16}
+          refreshControl={
+            <RefreshControl 
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh}
+            />
+          }
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
           )}
@@ -123,4 +139,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(({tweet}) => ({tweets: tweet.tweets}))(ExploreContainer)
+export default connect(({tweet}) => ({tweets: tweet.tweets}), {getTweets})(ExploreContainer)

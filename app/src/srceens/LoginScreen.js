@@ -7,7 +7,7 @@ import {
   AsyncStorage,
   StyleSheet
 } from 'react-native'
-import {Button, Spinner} from 'native-base'
+import {Button, Spinner, Toast} from 'native-base'
 import {colors} from '../utils/constants'
 import {User} from '../api'
 
@@ -18,7 +18,9 @@ class LoginScreen extends Component {
     header: null
   })
   state = {
-    loading: false
+    loading: false,
+    username: '',
+    password: ''
   }
   _registOnPress = () => {
     this.props.navigation.navigate('Signup')
@@ -30,8 +32,13 @@ class LoginScreen extends Component {
       const data = await User.login({username, password})
       this.setState({loading: false})
       if (data.status === 200) {
+        this.props.navigation.navigate('Home')
         await AsyncStorage.setItem('@insAndapp', data.token)
-        this.props.navigation.navigate('Main')
+      } else if (data.status === 400) {
+        Toast.show({
+          text: data.message,
+          type: 'danger'
+        })
       }
     } catch (error) {
       throw error
@@ -43,6 +50,10 @@ class LoginScreen extends Component {
     } else {
       this.setState({password: value})
     }
+  }
+  get _btnDisabled () {
+    const {username, password} = this.state
+    return !username || !password
   }
   render() {
     if (this.state.loading) {
@@ -71,7 +82,7 @@ class LoginScreen extends Component {
               placeholderTextColor={colors.LIGHT_BLACK}
               onChangeText={(value) => this._onChangeText(value, 'password')}
             />
-            <Button style={styles.submitButton} onPress={this._login}>
+            <Button style={styles.submitButton} onPress={this._login} disabled={this._btnDisabled}>
               <Text style={styles.submitButtonText}>登录</Text>
             </Button>
           </View>

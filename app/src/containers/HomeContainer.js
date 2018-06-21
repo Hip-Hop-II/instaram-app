@@ -17,14 +17,15 @@ import {getTweets} from '../redux/actions/tweet'
 import {Tweet} from '../api'
 
 class HomeContainer extends Component {
+  state = {
+    loading: false,
+    refreshing: false,
+    lastTweets: null
+  }
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
       <Icon name="ios-home" style={{ color: tintColor, fontSize: 24 }} />
     )
-  }
-  state = {
-    loading: false,
-    refreshing: false
   }
   _renderCard () {
     return this.props.tweets.map((item, index) => {
@@ -62,7 +63,7 @@ class HomeContainer extends Component {
   }
   componentDidMount () {
     this.setState({loading: false})
-    this.props.getTweets()
+    this._onRefresh()
   }
   render() {
     if (this.state.loading) {
@@ -77,6 +78,7 @@ class HomeContainer extends Component {
       <Container style={styles.container}>
         {this._renderHeader()}
         <ScrollView style={styles.scrollView}
+          title="更新成功"
           refreshControl={
             <RefreshControl 
               refreshing={this.state.refreshing}

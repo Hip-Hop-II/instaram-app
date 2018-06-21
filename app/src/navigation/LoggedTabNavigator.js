@@ -28,9 +28,9 @@ export default createBottomTabNavigator({
   },
 }, {
   mode: 'model',
-  initialRouteName: 'Home',
   animationEnabled: true,
   swipeEnabled: true,
+  lazy: true,
   tabBarOptions: {
     style: {
       ...Platform.select({

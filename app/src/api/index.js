@@ -25,7 +25,7 @@ async function parseParams (params={}) {
       headers: {
         'Content-Type': 'application/json',
         credentials: 'same-origin',
-        authorization: data != null ? `Bearer ${data}` : null
+        authorization: data != null ? `Bearer ${data}` : ''
       }
     }
     if (params.method) {

@@ -39,7 +39,7 @@ class SignupScreen extends Component {
       this.setState({loading: false})
       if (data.status === 200) {
         await AsyncStorage.setItem('@insAndapp', data.token)
-        this.props.navigation.navigate('Main')
+        this.props.navigation.navigate('Home')
       }
     } catch (error) {
       throw error

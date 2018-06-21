@@ -120,7 +120,7 @@ class UserContainer extends Component {
     this.setState({refreshing: false})
   }
   componentDidMount () {
-    this.props.getUserTweets()
+    this._onRefresh()
   }
   render() {
     return (

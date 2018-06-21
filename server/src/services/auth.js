@@ -27,8 +27,5 @@ export function decodeToken (token) {
   if (arr[0] === 'Bearer') {
     return jwt.verify(arr[1], constants.JWT_SECRET)
   }
-  console.log('=========================')
-  console.log('=========================', token)
-  console.log('=========================')
   throw new Error('Token not valid')
 }

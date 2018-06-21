@@ -43,10 +43,14 @@ export async function getUserTweets (req, res) {
     const user = req.user._id
     const userTweets = await Tweet.find({user}).sort({createdAt: -1})
     const users = await User.findById(user)
+    const count = await Tweet.find({user}).count()
     if (userTweets) {
       return res.json({
         data: {
-          user: users,
+          user: {
+            ...users,
+            count
+          },
           data: userTweets
         },
         message: '',

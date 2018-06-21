@@ -15,7 +15,7 @@ import { avatarImg, colors } from '../../utils/constants';
 
 class UserInfo extends Component {
   render() {
-    const {username, avatar, uploadOnPress} = this.props
+    const {username, avatar, uploadOnPress, count} = this.props
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
@@ -27,7 +27,7 @@ class UserInfo extends Component {
           <View style={styles.userContent}>
             <View style={styles.userCaption}>
               <View style={styles.captionItem}>
-                <Text style={styles.captionItemResult}>0</Text>
+                <Text style={styles.captionItemResult}>{count}</Text>
                 <Text style={styles.captionItemText}>帖子</Text>
               </View>
               <View style={styles.captionItem}>
