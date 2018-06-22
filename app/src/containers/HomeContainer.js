@@ -12,7 +12,7 @@ import CardContentItem from '../components/CardItem'
 import { colors } from '../utils/constants'
 import HeaderButton from '../components/Buttons/HeaderButton'
 import {connect} from 'react-redux'
-import {getTweets, updateFavoriteTweet} from '../redux/actions/tweet'
+import {getTweets, updateFavoriteTweet, getUserTweets} from '../redux/actions/tweet'
 
 import {Tweet} from '../api'
 
@@ -32,6 +32,7 @@ class HomeContainer extends Component {
       const data = await Tweet.favoriteTweet({_id})
       if (data.status === 200) {
         this.props.updateFavoriteTweet(_id, data.data.isFavorited, data.data.favoriteCount)
+        this.props.getUserTweets()
       }
     } catch (error) {
       throw error
@@ -120,6 +121,7 @@ const mapStateToProps = ({tweet}) => ({
 })
 const mapDispatchToProps = {
   getTweets,
-  updateFavoriteTweet
+  updateFavoriteTweet,
+  getUserTweets
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer)
