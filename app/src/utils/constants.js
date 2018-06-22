@@ -10,7 +10,8 @@ export const colors = {
   LIGHT_GRAY: '#CAD0D6',
   LIGHT_BLACK: '#D1CECE',
   LIGHT_PRIMARY: 'rgba(85, 172, 238, .6)',
-  LIGHT_WHITE: '#f2f2f2'
+  LIGHT_WHITE: '#f2f2f2',
+  LIGHT_RED: 'rgb(242, 19, 93)'
 }
 
 export const avatarImg = 'https://i.loli.net/2018/06/20/5b29c5f193642.jpg'

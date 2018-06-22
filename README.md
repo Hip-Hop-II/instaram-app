@@ -1,8 +1,27 @@
 ## ins-app
 
+* [项目启动](#项目启动)
+  * [Android stuiod](#Android stuiod)
+  * [安卓模拟器(Genymotion)](#安卓模拟器(Genymotion))
+  * [expo XDE](#expo XDE)
 * [项目技术栈](#项目技术栈)
   * [移动端](#移动端)
   * [服务端](#服务端)
+
+## 项目启动
+因为这个项目大部分时间是在 `windows` 系统上开发的， 为了开发的简便， 使用了 `expo XDE` 进行开发，省去了配置 `JAVA SDK`, `Android` 环境等一系列繁琐的事情， 不过也有一些步骤需要完成。
+
+### Android stuiod
+
+首先需要到官方下载一个 `Android stuiod`, 同时下载 `android SDK` 因为模拟器的连接需要使用到 `adb`, 这个需要 `android JDK` 才能运行起来
+
+### 安卓模拟器(Genymotion)
+
+这个推荐的是 Genymotion
+
+### expo XDE
+
+这个是 `expo` 官方推出的一个模拟开发环境的编译工具， 具体操作可以查看官方文档 [expr](https://docs.expo.io)
 
 ## 项目技术栈
 
