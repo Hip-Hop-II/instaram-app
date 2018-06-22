@@ -120,5 +120,20 @@ export const Tweet = {
     } catch (error) {
       throw error
     }
+  },
+  async favoriteTweet (data) {
+    try {
+      const params = await parseParams({
+        method: 'POST',
+        data
+      })
+      return fetch(`${config.API_PATH}/tweet/favorite`, params)
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(data => data)
+        .catch(error => console.error(error))
+    } catch (error) {
+      throw error
+    }
   }
 }

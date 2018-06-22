@@ -19,7 +19,7 @@ import dayjs from 'dayjs'
 
 class CardContentItem extends Component {
   render() {
-    const {photo, text, favoriteCount} = this.props
+    const {_id, photo, text, favoriteCount, isFavorited, favoriteTweetOnPress} = this.props
     const {username, avatar, createdAt} = this.props.user
     return (
       <Card transparent>
@@ -42,10 +42,10 @@ class CardContentItem extends Component {
         </CardItem>
         <CardItem style={{height: 45}}>
           <Left>
-            <Button transparent>
+            <Button transparent onPress={() => favoriteTweetOnPress(_id)}>
               <Icon 
-              name="ios-heart-outline"
-              style={{color: colors.BLACK}}
+              name={isFavorited ? 'ios-heart': 'ios-heart-outline'}
+              style={{color: isFavorited ? colors.LIGHT_RED : colors.BLACK}}
               />
             </Button>
             <Button transparent>

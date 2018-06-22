@@ -1,4 +1,5 @@
 import User from '../models/User'
+import FavoriteTweet from '../models/FavoriteTweet'
 export async function signup (req, res) {
   try {
     const {username, password, avatar, email} = req.body
@@ -7,6 +8,9 @@ export async function signup (req, res) {
       password,
       avatar,
       email
+    })
+    await FavoriteTweet.create({
+      userId: user._id
     })
     if (user) {
       return res.json({

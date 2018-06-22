@@ -11,7 +11,8 @@ router.post('/uploadAvatar', requireAuth, users.uploadAvatar)
 
 // tweet
 router.get('/tweet/list', requireAuth, tweets.getTweets)
-router.post('/tweet', requireAuth, tweets.createTweet)
 router.get('/usertweet/list', requireAuth, tweets.getUserTweets)
+router.post('/tweet', requireAuth, tweets.createTweet)
+router.post('/tweet/favorite', requireAuth, tweets.favoriteTweet)
 
 export default router

@@ -30,3 +30,12 @@ export function getUserTweets () {
     }
   }
 }
+
+export function updateFavoriteTweet (_id, isFavorited, favoriteCount) {
+  return {
+    type: 'UPDATE_FAV_TWEET',
+    _id,
+    isFavorited,
+    favoriteCount
+  }
+}
