@@ -5,6 +5,8 @@ import {
   ImageBackground,
   ScrollView,
   RefreshControl,
+  TextInput,
+  KeyboardAvoidingView,
   TouchableOpacity
 } from 'react-native'
 import { Container, Content, Icon, Header, Left, Body, Right, Title, Button, Spinner } from 'native-base'
@@ -20,7 +22,8 @@ class HomeContainer extends Component {
   state = {
     loading: false,
     refreshing: false,
-    lastTweets: null
+    lastTweets: null,
+    sending: false
   }
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
@@ -38,10 +41,13 @@ class HomeContainer extends Component {
       throw error
     }
   }
+  _comment = () => {
+    this.setState({ sending: true})
+  }
   _renderCard () {
     return this.props.tweets.map((item, index) => {
       return (
-        <CardContentItem key={index} {...item} favoriteTweetOnPress={this._favoriteTweet} />
+        <CardContentItem key={index} {...item} favoriteTweetOnPress={this._favoriteTweet} commentOnPress={this._comment} />
       )
     })
   }
@@ -86,6 +92,7 @@ class HomeContainer extends Component {
       )
     }
     return (
+      <KeyboardAvoidingView behavior="padding">
       <Container style={styles.container}>
         {this._renderHeader()}
         <ScrollView style={styles.scrollView}
@@ -98,8 +105,10 @@ class HomeContainer extends Component {
           }
         >
           {this._renderCard()}
+          {this.state.sending && <TextInput style={{borderWidth: 2}} returnKeyType="send" />}
         </ScrollView>
       </Container>
+      </KeyboardAvoidingView>
     )
   }
 }

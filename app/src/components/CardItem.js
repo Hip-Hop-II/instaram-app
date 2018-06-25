@@ -48,7 +48,7 @@ class CardContentItem extends Component {
               style={{color: isFavorited ? colors.LIGHT_RED : colors.BLACK}}
               />
             </Button>
-            <Button transparent>
+            <Button transparent onPress={ () => commentOnPress(_id)}>
               <Icon 
               name="ios-chatbubbles-outline"
               style={{color: colors.BLACK}}
@@ -77,7 +77,14 @@ class CardContentItem extends Component {
 }
 
 CardContentItem.propTypes = {
-
+  favoriteTweetOnPress: PropTypes.func,
+  commentOnPress: PropTypes.func,
+  _id: PropTypes.string,
+  user: PropTypes.object,
+  photo: PropTypes.string,
+  text: PropTypes.string,
+  isFavorited: PropTypes.bool,
+  favoriteCount: PropTypes.number
 }
 
 const styles = StyleSheet.create({

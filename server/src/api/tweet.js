@@ -80,9 +80,6 @@ export async function favoriteTweet (req, res) {
   try {
     const user = req.user._id
     const {_id} = req.body
-    console.log('=================')
-    console.log('=================', user)
-    console.log('=================')
     const favorites = await FavoriteTweet.findOne({userId: user})
     const fav = await favorites.userFavoritedTweet(_id)
     return res.json({
