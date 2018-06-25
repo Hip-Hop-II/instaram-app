@@ -1,5 +1,14 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "name": "clone-ins",
+    "icon": "./src/images/icon.png",
+    "version": "0.0.1",
+    "sdkVersion": "27.0.0",
+    "ios": {
+      "bundleIdentifier": "com.leo.ins"
+    },
+    "android": {
+      "package": "com.leo.ins"
+    }
   }
 }

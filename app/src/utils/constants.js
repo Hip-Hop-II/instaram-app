@@ -19,5 +19,5 @@ export const cardItemImg = 'https://raw.githubusercontent.com/nathvarun/React-Na
 export const dimensions = Dimensions.get('window')
 
 export const config = {
-  API_PATH: 'http://172.16.12.105:9999'
+  API_PATH: 'http://192.168.1.3:9999'
 }
