@@ -19,7 +19,7 @@ import dayjs from 'dayjs'
 
 class CardContentItem extends Component {
   render() {
-    const {_id, photo, text, favoriteCount, isFavorited, favoriteTweetOnPress} = this.props
+    const {_id, photo, text, favoriteCount, isFavorited, favoriteTweetOnPress, commentOnPress} = this.props
     const {username, avatar, createdAt} = this.props.user
     return (
       <Card transparent>

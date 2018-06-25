@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
+  View,
   ImageBackground,
   ScrollView,
   RefreshControl,
@@ -23,7 +24,8 @@ class HomeContainer extends Component {
     loading: false,
     refreshing: false,
     lastTweets: null,
-    sending: false
+    sending: false,
+    comment: ''
   }
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
@@ -78,9 +80,21 @@ class HomeContainer extends Component {
       </Header>
     )
   }
+  _textOnBlur = () => {
+    this.setState({sending: false})
+  }
   componentDidMount () {
     this.setState({loading: false})
     this._onRefresh()
+  }
+  _sendOnChangeText = (comment) => {
+    this.setState({comment})
+  }
+  _onScroll = () => {
+    this.setState({sending: false})
+  }
+  get _sendButtonDisabled () {
+    return !this.state.comment.length
   }
   render() {
     if (this.state.loading) {
@@ -92,11 +106,12 @@ class HomeContainer extends Component {
       )
     }
     return (
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
       <Container style={styles.container}>
         {this._renderHeader()}
         <ScrollView style={styles.scrollView}
-          title="更新成功"
+        scrollEventThrottle={16}
+        onScroll={this._onScroll}
           refreshControl={
             <RefreshControl 
               refreshing={this.state.refreshing}
@@ -105,8 +120,17 @@ class HomeContainer extends Component {
           }
         >
           {this._renderCard()}
-          {this.state.sending && <TextInput style={{borderWidth: 2}} returnKeyType="send" />}
         </ScrollView>
+        {this.state.sending && (
+          <View style={styles.inputWrapper}>
+            <TextInput style={styles.inputText} onBlur={this._textOnBlur} 
+            onChangeText={this._sendOnChangeText}
+            returnKeyType="send" placeholder="请输入内容" autoFocus={true} />
+            <Button style={[styles.inputButton, {backgroundColor: this._sendButtonDisabled ? colors.LIGHT_PRIMARY : colors.PRIMARY}]} disabled={this._sendButtonDisabled}>
+              <Text style={styles.inputButtonText}>send</Text>
+            </Button>
+          </View>
+        )}
       </Container>
       </KeyboardAvoidingView>
     )
@@ -123,6 +147,36 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1
+  },
+  inputWrapper: {
+    height: 40,
+    backgroundColor: colors.LIGHT_WHITE,
+    borderTopWidth: 1,
+    borderTopColor: colors.LIGHT_BLACK,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  inputText: {
+    height: 30,
+    flex: 4,
+    borderWidth: .5,
+    borderColor: colors.LIGHT_BLACK,
+    borderRadius: 5,
+    paddingHorizontal: 5
+  },
+  inputButton: {
+    flex: 1,
+    height: 30,
+    paddingHorizontal: 20,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginLeft: 10
+  },
+  inputButtonText: {
+    color: colors.WHITE,
+    fontSize: 12
   }
 })
 const mapStateToProps = ({tweet}) => ({
